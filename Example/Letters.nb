@@ -1,0 +1,78 @@
+10 cls
+20 dim letters$(80): dim p(80)
+30 s_left = 0: s_right = 79: s_top = 0: s_bottom = 20: fwidth = s_right - s_left + 1
+40 interval = 70: rptnum = 10: letternum = 0: lettermax = 5: ret = 0: ret$ = "": lettersum = 0: score = 0: missed = 0
+50 gosub 6000 : randomize timer
+
+70 for i = s_left to s_right : locate i, s_bottom + 1: print "-";: next i
+
+90 rem main loop
+100 currnum = 0: gosub 5000 : gosub 5100
+110 for i = 1 to rptnum
+140 ret$ = inkey$
+150 if ret$ = "" then goto 180
+155 if asc(ret$) > asc("Z") then ret$ = chr$( 65 + asc(ret$) - asc("a") )
+160 oldlt = letternum: gosub 5300: if letternum <> oldlt then score = score + 1 else missed = missed + 1
+170 if currnum = lettermax and letternum = 0 then gosub 5500: goto 100
+180 gosub 5600: pause interval
+190 next i
+
+300 gosub 5100: gosub 5200
+310 if ret = 1 then gosub 5400: end
+320 if currnum < lettermax then gosub 5000 : currnum = currnum + 1
+330 goto 110
+
+5000 rem func: insert new letter
+5010 l$ = chr$( rnd(26) + 65 )
+5020 for i1 = 1 to 80
+5030 if letters$(i1) = l$ then goto 5010
+5040 next i1
+5050 ps = rnd(fwidth) + s_left : if p(ps) <> -1 then goto 5050
+5060 p(ps) = s_top: letters$( ps ) = l$: letternum = letternum + 1: lettersum = lettersum + 1
+5070 return
+
+5100 rem func: move letter
+5110 for i2 = s_left to s_right
+5120 if p(i2) = -1 then goto 5150
+5130 if p(i2) > s_top then locate i2, p(i2): print " ";
+5140 p(i2) = p(i2) + 1: locate i2, p(i2): print letters$(i2);
+5150 next i2
+5160 return
+
+5200 rem func: check end
+5210 ret = 0: for i3 = s_left to s_right
+5220 if p(i3) >= s_bottom then ret = 1 : return
+5230 next i3
+5240 return
+
+5300 rem func: remove letter
+5310 for i4 = s_left to s_right
+5320 if letters$(i4) <> ret$ then goto 5350
+5330 locate i4, p(i4): print " ";
+5340 letters$(i4) = "": p(i4) = -1 : letternum = letternum - 1
+5350 next i4
+5360 return
+
+5400 rem func: game over
+5410 cls: tmp_score = score - missed * 3: if tmp_score < 0 then tmp_score = 0
+5420 locate 40, 10: print "GAME OVER, score: "; tmp_score : for xxx = 1 to 10: print: next xxx
+5430 return
+
+5500 rem func: next level
+5510 lettermax = lettermax + 2: if lettermax > 26 then lettermax = 26
+5520 rptnum = rptnum - 1
+5530 if rptnum < 2 then rptnum = 2 : interval = interval - 10: if interval < 50 then interval = 50
+5540 return
+
+5600 rem func: print score
+5610 locate 0, s_bottom + 2: print "Letters: "; lettersum;
+5620 locate 19, s_bottom + 2: print "Missed: "; missed;
+5630 locate 38, s_bottom + 2: print "Captured: "; score;
+5640 tmp_score = score - missed * 3: if tmp_score < 0 then tmp_score = 0
+5650 locate 58, s_bottom + 2: print "Score: "; tmp_score;
+5660 locate 74, s_bottom + 2: print "L: "; 700 - interval * rptnum;
+5690 return
+
+6000 rem func: init
+6010 for j1 = 0 to 80: p(j1) = -1: next j1
+6020 return

@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{81B6B1B0-8997-4A08-86DE-24AB2D5A64DF}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BasicN</RootNamespace>
+    <AssemblyName>BasicN</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="QUT.ShiftReduceParser, Version=1.4.1.0, Culture=neutral, PublicKeyToken=402396ef6102baec, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>LexYacc\QUT.ShiftReduceParser.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Compiler\Factory.cs" />
+    <Compile Include="Compiler\BNCompiler.Compiler.cs" />
+    <Compile Include="Compiler\BNCompiler.cs" />
+    <Compile Include="Compiler\BNCompiler.Library.cs" />
+    <Compile Include="Interpreter\Commands.cs" />
+    <Compile Include="Interpreter\Exceptions.cs" />
+    <Compile Include="Interpreter\Functions.cs" />
+    <Compile Include="Interpreter\Interfaces.cs" />
+    <Compile Include="Interpreter\NBInterpreter.cs" />
+    <Compile Include="Interpreter\NBInterpreter.Factory.cs" />
+    <Compile Include="Interpreter\Types.cs" />
+    <Compile Include="NBasic.cs" />
+    <Compile Include="Parser\BNParser.y.cs" />
+    <Compile Include="Parser\BNParserLex.cs" />
+    <Compile Include="Parser\BNParser.cs" />
+    <Compile Include="Parser\BNValue.cs" />
+    <Compile Include="Parser\ParserTypes.cs" />
+    <Compile Include="Parser\Scanner.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tokenizer\BNTokenizer.cs" />
+    <Compile Include="Tokenizer\ReplacementKeywords.cs" />
+    <Compile Include="Tokenizer\TokenizerInterfaces.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="LexYacc\BNParser.y" />
+    <None Include="LexYacc\BNParserLex.lex" />
+    <None Include="LexYacc\GPPGcopyright.rtf" />
+    <None Include="LexYacc\make.bat" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="LexYacc\Gplex.exe" />
+    <Content Include="LexYacc\gppg.exe" />
+    <Content Include="LexYacc\QUT.ShiftReduceParser.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="BasicNLib\BasicNLib.csproj">
+      <Project>{70F85AB7-48C3-43EF-919C-74FF5CCE5D99}</Project>
+      <Name>BasicNLib</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
