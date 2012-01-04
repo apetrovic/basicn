@@ -1,4 +1,7 @@
-﻿using System;
+﻿// BasicN, copyright (c) Aleksandar Petrovic, 2008 - 2011
+// (see accompanying copyright.txt)
+
+using System;
 using System.Reflection;
 using System.Reflection.Emit;
 using System.Threading;
@@ -49,7 +52,7 @@ namespace BasicN.Compiler {
 
 			context.ProgramMain = main;
 			context.ProgramIL = il;
-			
+
 
 			DoCompile( context, to );
 
@@ -76,7 +79,7 @@ namespace BasicN.Compiler {
 				}
 			}
 
-			il.Emit( OpCodes.Ret );			
+			il.Emit( OpCodes.Ret );
 		}
 	}
 }

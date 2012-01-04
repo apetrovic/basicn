@@ -1,4 +1,7 @@
-﻿using System;
+﻿// BasicN, copyright (c) Aleksandar Petrovic, 2008 - 2011
+// (see accompanying copyright.txt)
+
+using System;
 using System.Collections.Generic;
 using BasicN.Parser;
 using System.IO;
@@ -13,7 +16,7 @@ namespace BasicN.Tokenizer {
 		public TLine Line;
 		public TokenizerException(TLine line, string message) : base( message ) { Line = line; }
 	}
-	
+
 	public class NBTokenizer {
 		public static TokenizerOutput TokenizeFile(IErrorPrinter errorPrinter, string fileName) {
 			return Tokenize( errorPrinter, GetLines( fileName ) );
@@ -183,7 +186,7 @@ namespace BasicN.Tokenizer {
 
 			if( kwif.ElseStatements == null ) {
 				newIf.JumpPos = program.Program.Count;
-				
+
 			}
 			else {
 				var gt = new KwrGoto( -1, true );
@@ -255,7 +258,7 @@ namespace BasicN.Tokenizer {
 				KwrJump jmp = kw.Kind == KwOn.OnKind.Goto ? new KwrGoto( jumpPos, false ) : (KwrJump)new KwrGosub( jumpPos, false );
 				program.Program.Add( line.Clone( jmp ) );
 
-				ifc.JumpPos = program.Program.Count;				
+				ifc.JumpPos = program.Program.Count;
 			}
 		}
 

@@ -1,4 +1,7 @@
-﻿using System;
+﻿// BasicN, copyright (c) Aleksandar Petrovic, 2008 - 2011
+// (see accompanying copyright.txt)
+
+using System;
 using System.Collections.Generic;
 using BasicN.Tokenizer;
 using BasicN.Parser;
@@ -11,7 +14,7 @@ namespace BasicN.Compiler {
 		public ILGenerator IL;
 		public CompilerContext.OutputInterface Out;
 		public Factory Factory;
-				
+
 		// gosub/return stuff
 		public Label EndLabel;
 		public Label ReturnLabel;
@@ -62,8 +65,8 @@ namespace BasicN.Compiler {
 			bool isString = name.EndsWith( "$" );
 			var dict = isString ? StringArrayTypes : DoubleArrayTypes;
 			Type arrayType;
-			
-			if( !dict.TryGetValue( rank, out arrayType ) ) 
+
+			if( !dict.TryGetValue( rank, out arrayType ) )
 				throw new Exception( "Too manu dimensions for array " + name );
 
 			FieldBuilder ret = Program.DefineField( name, arrayType, FieldAttributes.Public );
@@ -118,7 +121,7 @@ namespace BasicN.Compiler {
 	public partial class NBCompiler {
 		private static Factory GetFactory() {
 			var f = new Factory();
-			
+
 			// Constants
 			f.Add<StringConstant, string>( (c, i) => c.IL.Emit( OpCodes.Ldstr, i.Value ) );
 			f.Add<NumConstant, double>( (c, i) => c.IL.Emit( OpCodes.Ldc_R8, i.Value ) );
@@ -223,7 +226,7 @@ namespace BasicN.Compiler {
 				switch( i.Operator ) {
 					case "^^": c.IL.Emit( OpCodes.Xor ); break;
 					case "&&": c.IL.Emit( OpCodes.And ); break;
-					case "||": c.IL.Emit( OpCodes.Or ); break;					
+					case "||": c.IL.Emit( OpCodes.Or ); break;
 					default: throw new Exception( "Unknown operator!" );
 				}
 			} );
@@ -310,7 +313,7 @@ namespace BasicN.Compiler {
 				foreach( NumStatement num in i.Array.Dimensions ) {
 					f.Execute( c, num );
 					c.IL.Emit( OpCodes.Conv_I4 );
-					
+
 					c.IL.Emit( OpCodes.Ldc_I4_1 ); // we need to allocate one more item in the array
 					c.IL.Emit( OpCodes.Add );
 
@@ -346,7 +349,7 @@ namespace BasicN.Compiler {
 
 				// get the string...
 				c.IL.Emit( OpCodes.Ldsfld, c.DataList );
-				c.IL.Emit( OpCodes.Ldarg_0 );				
+				c.IL.Emit( OpCodes.Ldarg_0 );
 				c.IL.Emit( OpCodes.Ldfld, c.DataPointer );
 				c.IL.Emit( OpCodes.Ldelem_Ref );
 
@@ -372,7 +375,7 @@ namespace BasicN.Compiler {
 					c.IL.Emit( OpCodes.Pop ); // we don't care about the return value
 					c.IL.Emit( OpCodes.Ldloc, c.DoubleConversionVar ); // push the calculated value onto the stack
 				}
-				
+
 				// finally, write the value into the variable
 				v.SetValue( c, (Statement)i.Variable );
 			} );
@@ -394,7 +397,7 @@ namespace BasicN.Compiler {
 				v.Prepare( c, (Statement)i.Variable );
 
 				c.IL.Emit( OpCodes.Ldarg_1 ); // IContext
-				
+
 				// do we have a prompt?
 				if( i.Prompt == null || string.IsNullOrEmpty( i.Prompt.Value ) )
 					c.IL.Emit( OpCodes.Ldnull );
@@ -429,7 +432,7 @@ namespace BasicN.Compiler {
 				else {
 					c.IL.Emit( OpCodes.Newobj, typeof( Random ).GetConstructor( Type.EmptyTypes ) );
 				}
-				
+
 				c.IL.Emit( OpCodes.Stloc, c.Rnd );
 			} );
 
@@ -521,7 +524,7 @@ namespace BasicN.Compiler {
 				c.IL.Emit( OpCodes.Ldloca, c.DoubleConversionVar );
 				c.IL.Emit( OpCodes.Call, typeof( double ).GetMethod( "TryParse", new[] { typeof( string ), typeof( double ).MakeByRefType() } ) );
 				c.IL.Emit( OpCodes.Pop ); // we don't care about the return value
-				c.IL.Emit( OpCodes.Ldloc, c.DoubleConversionVar ); 
+				c.IL.Emit( OpCodes.Ldloc, c.DoubleConversionVar );
 			} );
 
 			f.Add<NfInt, double>( (c, i) => {
@@ -548,8 +551,8 @@ namespace BasicN.Compiler {
 
 		private static void DoCompile(CompilerContext outerContext, TokenizerOutput to) {
 			var c = new CompilingContext {
-				IL = outerContext.ProgramIL, 
-				Out = outerContext.DefaultOutput, 
+				IL = outerContext.ProgramIL,
+				Out = outerContext.DefaultOutput,
 				Program = outerContext.ProgramType
 			};
 
@@ -558,7 +561,7 @@ namespace BasicN.Compiler {
 			// string conversion stuff
 			c.DoubleConversionVar = c.IL.DeclareLocal( typeof( Double ) );
 			c.CharConversionVar = c.IL.DeclareLocal( typeof( char ) );
- 
+
 			// data / read
 			c.DataList = outerContext.ProgramDataList;
 			c.DataPointer = c.Program.DefineField( "DataPointer", typeof( int ), FieldAttributes.Public );
@@ -583,7 +586,7 @@ namespace BasicN.Compiler {
 			// switch off the cursor
 			//c.IL.Emit( OpCodes.Ldc_I4_0 );
 			//c.IL.Emit( OpCodes.Call, typeof( Console ).GetMethod( "set_CursorVisible" ) );
-			
+
 			Factory f = GetFactory();
 			c.Factory = f;
 			for( int i = 0; i < to.Program.Count; ++i ) {
@@ -603,7 +606,7 @@ namespace BasicN.Compiler {
 			//c.IL.Emit( OpCodes.Ldc_I4_1 );
 			//c.IL.Emit( OpCodes.Call, typeof( Console ).GetMethod( "set_CursorVisible" ) );
 
-			MakeReturn( c );	
+			MakeReturn( c );
 
 			// return
 			c.IL.MarkLabel( c.EndLabel );
@@ -638,14 +641,14 @@ namespace BasicN.Compiler {
 			c.IL.Emit( OpCodes.Ldstr, "RETURN without GOSUB" );
 			c.IL.Emit( OpCodes.Newobj, typeof( Exception ).GetConstructor( new[] { typeof( string ) } ) );
 			c.IL.Emit( OpCodes.Throw );
-			
+
 			c.IL.MarkLabel( okLabel );
-			
+
 			LocalBuilder popValue = c.IL.DeclareLocal( typeof( int ) );
 			c.IL.Emit( OpCodes.Ldloc, c.GosubStack );
 			c.IL.Emit( OpCodes.Call, typeof( Stack<int> ).GetMethod( "Pop" ) );
 			c.IL.Emit( OpCodes.Stloc, popValue );
-			
+
 			foreach( int label in c.ReturnLabels() ) {
 				Label returnLabel = c.GetLabel( label );
 				c.IL.Emit( OpCodes.Ldloc, popValue );

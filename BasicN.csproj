@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>BasicN</RootNamespace>
     <AssemblyName>BasicN</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -42,7 +42,6 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
@@ -71,15 +70,16 @@
     <Compile Include="Tokenizer\TokenizerInterfaces.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="LexYacc\BNParser.y" />
-    <None Include="LexYacc\BNParserLex.lex" />
-    <None Include="LexYacc\GPPGcopyright.rtf" />
-    <None Include="LexYacc\make.bat" />
+    <None Include="app.config" />
+    <None Include="GPPG\BNParser.y" />
+    <None Include="GPPG\BNParserLex.lex" />
+    <None Include="GPPG\GPPGcopyright.rtf" />
+    <None Include="GPPG\make.bat" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="LexYacc\Gplex.exe" />
-    <Content Include="LexYacc\gppg.exe" />
-    <Content Include="LexYacc\QUT.ShiftReduceParser.dll" />
+    <Content Include="GPPG\Gplex.exe" />
+    <Content Include="GPPG\gppg.exe" />
+    <Content Include="GPPG\QUT.ShiftReduceParser.dll" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="BasicNLib\BasicNLib.csproj">
@@ -88,6 +88,10 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>cd $(ProjectDir)\GPPG\
+make.bat</PreBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

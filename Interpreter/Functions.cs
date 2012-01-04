@@ -1,4 +1,7 @@
-﻿using BasicN.Parser;
+﻿// BasicN, copyright (c) Aleksandar Petrovic, 2008 - 2011
+// (see accompanying copyright.txt)
+
+using BasicN.Parser;
 using BasicN.Tokenizer;
 using BasicN.Lib;
 

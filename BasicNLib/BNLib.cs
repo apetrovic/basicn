@@ -1,4 +1,7 @@
-﻿using System;
+﻿// BasicN, copyright (c) Aleksandar Petrovic, 2008 - 2011
+// (see accompanying copyright.txt)
+
+using System;
 
 namespace BasicN.Lib {
 	public interface IContext {
@@ -80,13 +83,13 @@ namespace BasicN.Lib {
 			for( ; ; ) {
 				string read = context.ReadLine();
 				if( double.TryParse( read, out ret ) )
-					break; 
+					break;
 
 				context.PrintLine( "Error!" );
 				PrintPrompt( context, prompt, questionMark );
 			}
 
-			return ret;			
+			return ret;
 		}
 
 		public static string InputString(IContext context, string prompt, bool questionMark) {

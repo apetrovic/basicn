@@ -1,4 +1,7 @@
-﻿using System;
+﻿// BasicN, copyright (c) Aleksandar Petrovic, 2008 - 2011
+// (see accompanying copyright.txt)
+
+using System;
 using System.Collections.Generic;
 using BasicN.Parser;
 using BasicN.Tokenizer;
@@ -13,7 +16,7 @@ namespace BasicN.Interpreter {
 
 	public class ValueStore<T> : IValueStore {
 		private readonly T _initial;
-		
+
 		public ValueStore(T initialValue) {
 			_initial = initialValue;
 			Value = _initial;
@@ -29,7 +32,7 @@ namespace BasicN.Interpreter {
 			return typeof(T) == typeof(double) ? Value.ToString() : "'" + Value + "'";
 		}
 	}
-	
+
 	public class ArrayValueStore<T> : IValueStore {
 		public List<int> Dimensions = new List<int>();
 		private readonly List<int> Multipliers = new List<int>();
@@ -91,12 +94,12 @@ namespace BasicN.Interpreter {
 			Func<T, string> toString = t => typeof( T ) == typeof( double ) ? t.ToString() : "'" + t + "'";
 			StringBuilder sb = null;
 			foreach( T t in Value ) {
-				if( sb == null ) 
+				if( sb == null )
 					sb = new StringBuilder( toString( t ) );
-				else 
+				else
 					sb.Append( ", " + toString(t) );
 			}
-			
+
 			return sb == null ? "" : sb.ToString();
 		}
 	}
@@ -171,12 +174,12 @@ namespace BasicN.Interpreter {
 		public override string ToString() { return "Var: " + Name + " [=" + ValueAsString + "]"; }
 	}
 
-	
+
 	public class ArrayVariable<T> : BaseItem, IVariable<T> {
 		ArrayValueStore<T> _store;
 		List<IValue<double>> _coordinates = new List<IValue<double>>();
 		List<int> _dimensions;
-		
+
 		public string Name { get; protected set; }
 
 		public ArrayVariable(TLine pl, NBInterpreter i, Func<Statement, string> nameGetter) : base( pl, i ) {
@@ -194,15 +197,15 @@ namespace BasicN.Interpreter {
 			if( _store == null ) {
 				IValueStore store;
 				if( !Interpreter.Arrays.TryGetValue( Name, out store ) || (_store = (ArrayValueStore<T>)store) == null )
-					throw new InterpreterException( Line, "Unknown array " + Name );				
+					throw new InterpreterException( Line, "Unknown array " + Name );
 			}
-			
+
 			_dimensions = new List<int>();
 			foreach( var coordinate in _coordinates ) {
 				var ret = coordinate.Execute( c );
 				if( ret != InterpreterStatus.Ok )
 					return ret;
-				
+
 				int val = (int)coordinate.Value;
 				_dimensions.Add( val );
 			}
@@ -232,7 +235,7 @@ namespace BasicN.Interpreter {
 					dm += dm.Length == 0 ? d.ToString() : ", " + d.ToString();
 
 			ret += ( dm + " )" );
-			
+
 			if( _store != null )
 				ret += " [=" + ValueAsString + "]";
 

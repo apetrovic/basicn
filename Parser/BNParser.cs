@@ -1,4 +1,7 @@
-﻿using System;
+﻿// BasicN, copyright (c) Aleksandar Petrovic, 2008 - 2011
+// (see accompanying copyright.txt)
+
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
@@ -46,7 +49,7 @@ namespace BasicN.Parser {
 		public List<Statement> Statements;
 		public string ErrorMessage;
 		public int? ErrorColumn;
-		
+
 		public ParseReport Report = ParseReport.EmptyLine;
 	}
 
@@ -90,7 +93,7 @@ namespace BasicN.Parser {
 		}
 
 		public Line ParseLine(string line) {
-			var ret = new Line();			
+			var ret = new Line();
 
 			line = line.Trim();
 			if( String.IsNullOrEmpty( line ) ) {
@@ -109,7 +112,7 @@ namespace BasicN.Parser {
 			ret.LineNum = Int32.Parse( ln.Groups[1].Value );
 			string lnum = ret.LineNum + " ";
 			string statements = ln.Groups[2].Value;
-						
+
 			ParseStatements( statements, ret );
 			ret.OriginalLine = lnum + statements;
 			int columnCorrection = lnum.Length;

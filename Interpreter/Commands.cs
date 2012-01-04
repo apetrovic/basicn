@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿// BasicN, copyright (c) Aleksandar Petrovic, 2008 - 2011
+// (see accompanying copyright.txt)
+
+using System.Collections.Generic;
 using BasicN.Parser;
 using BasicN.Tokenizer;
 using BasicN.Lib;
@@ -28,7 +31,7 @@ namespace BasicN.Interpreter {
 
 		public override string ToString() { return "PRINT " + (_value != null ? _value.ToString() : ""); }
 	}
-	
+
 	public class EndCommand : BaseItem {
 		public EndCommand(TLine pl, NBInterpreter i) : base( pl, i ) { }
 		public override InterpreterStatus Execute(IContext c) { return InterpreterStatus.End; }
@@ -59,7 +62,7 @@ namespace BasicN.Interpreter {
 			_x = (IValue<double>)Interpreter.Make( pl.Clone( loc.X ) );
 			_y = (IValue<double>)Interpreter.Make( pl.Clone( loc.Y ) );
 		}
-		
+
 		public override InterpreterStatus Execute(IContext c) {
 			_x.Execute( c );
 			_y.Execute( c );
@@ -81,7 +84,7 @@ namespace BasicN.Interpreter {
 
 	public class RandomizeCommand : BaseItem {
 		private readonly IValue<double> _seed;
-		
+
 		public RandomizeCommand(TLine pl, NBInterpreter i) : base( pl, i ) {
 			KwRandomize rnd = (KwRandomize)pl.Statement;
 			if( rnd.Statement != null )
@@ -90,7 +93,7 @@ namespace BasicN.Interpreter {
 
 		public override InterpreterStatus Execute(IContext c) {
 			if( _seed != null ) {
-				_seed.Execute( c );				
+				_seed.Execute( c );
 				Interpreter.Randomize( (int)_seed.Value );
 			}
 			else
@@ -132,7 +135,7 @@ namespace BasicN.Interpreter {
 		public override InterpreterStatus Execute(IContext c) {
 			_maxValue.Execute( c );
 			_retValue = Interpreter.Rnd( (int)_maxValue.Value );
-			return InterpreterStatus.Ok; 
+			return InterpreterStatus.Ok;
 		}
 
 		public double Value { get { return _retValue; } }
@@ -328,8 +331,8 @@ namespace BasicN.Interpreter {
 
 			_name = arr.Name;
 			_dimensions = "";
-			foreach( int d in dimensions ) 
-				_dimensions += _dimensions.Length == 0 ? d.ToString() : "," + d; 
+			foreach( int d in dimensions )
+				_dimensions += _dimensions.Length == 0 ? d.ToString() : "," + d;
 
 			return InterpreterStatus.Ok;
 		}
@@ -461,7 +464,7 @@ namespace BasicN.Interpreter {
 	public class ReadCommand : BaseItem {
 		private string _read;
 		private readonly Func<IContext, InterpreterStatus> _worker;
-		
+
 		public ReadCommand(TLine line, NBInterpreter i) : base( line, i ) {
 			KwRead read = (KwRead)line.Statement;
 			if( read.Variable is NumVariable || read.Variable is NumArray ) {
@@ -492,7 +495,7 @@ namespace BasicN.Interpreter {
 					stringVar.Execute( c );
 					stringVar.SetValue( next );
 					_read = next;
-					
+
 					return InterpreterStatus.Ok;
 				};
 			}

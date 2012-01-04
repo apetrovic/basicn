@@ -1,4 +1,7 @@
-﻿using System;
+﻿// BasicN, copyright (c) Aleksandar Petrovic, 2008 - 2011
+// (see accompanying copyright.txt)
+
+using System;
 using System.Collections.Generic;
 using BasicN.Parser;
 using System.Reflection.Emit;
@@ -32,7 +35,7 @@ namespace BasicN.Compiler {
 
 	internal class TypedOp<T, RetType> : VoidOp<T> {
 		public TypedOp(Action<CompilingContext, T> action) : base( action ) { }
-		
+
 		public override Type Execute(CompilingContext c, Statement statement) {
 			base.Execute( c, statement );
 			return typeof( RetType );
@@ -68,7 +71,7 @@ namespace BasicN.Compiler {
 		public Type VariableType { get { return typeof( VarType ); } }
 	}
 
-	
+
 	internal class VariableArray<T, VarType> : BaseOp<T>, CVariable {
 		private static FieldBuilder GetField(CompilingContext c, Statement statement) {
 			Variable v = (Variable)statement;
@@ -84,7 +87,7 @@ namespace BasicN.Compiler {
 			foreach( NumStatement n in v.Dimensions ) {
 				c.Factory.Execute( c, n );
 				c.IL.Emit( OpCodes.Conv_I4 );
-			}				
+			}
 		}
 
 		public override Type Execute(CompilingContext c, Statement statement) {
@@ -147,16 +150,16 @@ namespace BasicN.Compiler {
 
 		public CItem Make(string typeName) {
 			CItem ret = GetItem( typeName );
-			
-			if( ret == null ) 
+
+			if( ret == null )
 				throw new Exception( "Unknown type " + typeName + "!!" );
-			
+
 			return ret;
 		}
 
 		public Type Execute(CompilingContext c, Statement s) {
 			CItem ret = Make( s.GetType().Name );
-			return ret.Execute( c, s );			
+			return ret.Execute( c, s );
 		}
 	}
 }

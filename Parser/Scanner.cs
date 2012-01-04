@@ -1,4 +1,7 @@
-﻿namespace BasicN.Parser {
+﻿// BasicN, copyright (c) Aleksandar Petrovic, 2008 - 2011
+// (see accompanying copyright.txt)
+
+namespace BasicN.Parser {
 	public sealed partial class Scanner {
 		private bool _ifState = false;
 		private bool _onState = false;
@@ -7,7 +10,7 @@
 
 		private Token MakeToken(string text) {
 			Tokens token = GetToken( text );
-			
+
 			switch( token ) {
 				case Tokens.If:
 					_ifState = true;
@@ -36,7 +39,7 @@
 
 				case "GOTO": return _onState ? Tokens.On_Goto : Tokens.Goto;
 				case "GOSUB": return _onState ? Tokens.On_Gosub : Tokens.Gosub;
-	
+
 				case "PRINT": return Tokens.Print;
 				case "INPUT": return Tokens.Input;
 				case "ON": return Tokens.On;

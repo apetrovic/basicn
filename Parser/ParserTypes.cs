@@ -1,8 +1,11 @@
-﻿using System;
+﻿// BasicN, copyright (c) Aleksandar Petrovic, 2008 - 2011
+// (see accompanying copyright.txt)
+
+using System;
 using System.Collections.Generic;
 
 namespace BasicN.Parser {
-	
+
 	public static class ArrayHelper {
 		public static IEnumerable<T> Map<T>(IEnumerable<T> source, Func<T, T> func) {
 			foreach( var elem in source )
@@ -64,7 +67,7 @@ namespace BasicN.Parser {
 
 	public class NumConstant : NumStatement {
 		public double Value { get; private set; }
-		public NumConstant(string val) { Value = double.Parse( val ); } 
+		public NumConstant(string val) { Value = double.Parse( val ); }
 	}
 
 	public class StringConstant : StringStatement {
@@ -213,7 +216,7 @@ namespace BasicN.Parser {
 	public interface Function3 : Function2 {
 		Statement Param3 { get; }
 	}
-	
+
 	public interface StringFunction : StringStatement { }
 
 	public class SfMid : StringFunction, Function3 {
@@ -273,7 +276,7 @@ namespace BasicN.Parser {
 	public class SfInkey : StringFunction, Function {}
 
 	public interface NumFunction : NumStatement { }
-	
+
 	public class NfLen : NumFunction, Function1 {
 		public StringStatement Statement { get; private set; }
 		public NfLen(StringStatement stringStatement) { Statement = stringStatement; }

@@ -1,4 +1,7 @@
-﻿using BasicN.Parser;
+﻿// BasicN, copyright (c) Aleksandar Petrovic, 2008 - 2011
+// (see accompanying copyright.txt)
+
+using BasicN.Parser;
 
 namespace BasicN.Tokenizer {
 	public class KwrJump : Statement {
@@ -19,7 +22,7 @@ namespace BasicN.Tokenizer {
 		public int ReturnAddress { get; set; }
 		public KwrGosub(int jumpPos, bool normalized) : base( jumpPos, normalized ) {}
 	}
-	
+
 	public class KwrJumpIfTrue : KwrJump {
 		public BooleanStatement Condition { get; internal set; }
 

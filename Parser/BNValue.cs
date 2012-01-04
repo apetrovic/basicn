@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿// BasicN, copyright (c) Aleksandar Petrovic, 2008 - 2011
+// (see accompanying copyright.txt)
+
+using System.Collections.Generic;
 
 namespace BasicN.Parser {
 	public struct BNValue {

@@ -1,4 +1,7 @@
-﻿using System;
+﻿// BasicN, copyright (c) Aleksandar Petrovic, 2008 - 2011
+// (see accompanying copyright.txt)
+
+using System;
 using BasicN.Interpreter;
 using BasicN.Lib;
 using BasicN.Tokenizer;
@@ -9,9 +12,9 @@ namespace BasicN {
 	public class ConsoleContext : IContext, IErrorPrinter {
 		public void Print(string s) { Console.Write( s ); }
 		public void PrintLine(string s) { Console.WriteLine( s ); }
-		
+
 		public string ReadLine() {
-			Console.CursorVisible = true; 
+			Console.CursorVisible = true;
 			string ret = Console.ReadLine();
 			Console.CursorVisible = false;
 			return ret;
@@ -22,7 +25,7 @@ namespace BasicN {
 		public void Locate(int x, int y) { Console.CursorLeft = x; Console.CursorTop = y; }
 		public void PrintError(string message) { Console.WriteLine( message ); }
 	}
-	
+
 	class BasicN {
 		static void Main(string[] args) {
 			if( args.Length < 1 ) {
@@ -59,7 +62,7 @@ namespace BasicN {
 			i.Load( path );
 
 			Console.CancelKeyPress += delegate {
-				Console.CursorVisible = true; 
+				Console.CursorVisible = true;
 				Console.WriteLine( "\n\nBreak in {0}\n\n", i.CurrentLineNumber );
 
 				if( debug )

@@ -1,4 +1,7 @@
-﻿using BasicN.Tokenizer;
+﻿// BasicN, copyright (c) Aleksandar Petrovic, 2008 - 2011
+// (see accompanying copyright.txt)
+
+using BasicN.Tokenizer;
 using BasicN.Lib;
 
 namespace BasicN.Interpreter {

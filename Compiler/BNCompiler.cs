@@ -1,4 +1,7 @@
-﻿using System;
+﻿// BasicN, copyright (c) Aleksandar Petrovic, 2008 - 2011
+// (see accompanying copyright.txt)
+
+using System;
 using System.Collections.Generic;
 using BasicN.Tokenizer;
 using System.Reflection;
@@ -52,7 +55,7 @@ namespace BasicN.Compiler {
 			CompilerContext context = CreateCompilerContext( outputType, fileName );
 			CreateProgramType( context, to );
 			CreateMainTypeAndSave( context );
-			
+
 			return true;
 		}
 
