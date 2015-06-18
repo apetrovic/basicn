@@ -5,7 +5,7 @@ BasicN is simple interpreter and compiler for BASIC programs. BasicN
 and programs compiled with BasicN requires .NET 3.5 framework (and above)
 to run.
 
-I wrote BasicN couple of years ago, part for fun, part as learning exercise,
+I wrote BasicN couple of years ago, part for fun, part as a learning exercise,
 and part for sentimental reasons, to mark 25 years since I ran my first program
 on friend's Commodore 64.
 
@@ -43,12 +43,12 @@ BasicN uses Garden Point Parser Generator (gppg.codeplex.com) for lexing and par
 BASIC code. GPPG uses lex/yacc like syntax for lexer and parser definition. BasicN
 lexer is defined in GPPG\BNParserLex.lex. For parser definition look at GPPG\NBParser.y.
 
-Parsed program is handled by tokenizer (files in Tokenizer folder). The role of tokenizer
+Parsed program is handled by tokenizer (files in Tokenizer folder). The role of the tokenizer
 is simplification of the program - all loops are reduced to IFs and GOTOs, ON x GOTO
 and ON x GOSUB statements are converted to series of IFs, etc. Tokenizer output is more
 suitable for the compiler and interpreter part than "raw" parser output.
 
-The Compliler (Compiler folder) and Interpreter (Interpreter folder) parts works with
+The Compiler (Compiler folder) and Interpreter (Interpreter folder) parts works with
 tokenizer output to produce standard .net executable or to interpret the program line
 by line.
 
